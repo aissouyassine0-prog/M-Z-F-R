@@ -1,19 +1,21 @@
 import streamlit as st
 import pandas as pd
 
-# سنقوم هنا بقراءة بيانات الجدول مباشرة
-# ملاحظة: يجب أن يكون رابط الجدول "عاماً" (Public) ليتمكن التطبيق من قراءته
-sheet_url = "ضع_رابط_جدول_البيانات_هنا" 
-csv_url = sheet_url.replace('/edit#gid=', '/export?format=csv&gid=')
+# ضع رابط جدولك هنا بين علامتي التنصيص
+SHEET_URL = "ضع_رابط_جدول_بياناتك_هنا"
 
-elif choice == "المواد الأولية":
-    st.header("🪵 جرد المواد الأولية من الجدول")
+# تحويل الرابط لصيغة يفهمها النظام
+csv_url = SHEET_URL.replace('/edit#gid=', '/export?format=csv&gid=')
+
+def app():
+    st.title("🏗️ نظام إدارة ورشة m z f r")
+    
     try:
-        # تحميل البيانات من الجدول وعرضها
+        # قراءة البيانات
         df = pd.read_csv(csv_url)
-        st.table(df)
-        
-        st.write("---")
-        st.info("💡 ملاحظة: قم بتحديث الجدول وسيقوم النظام بتحديث البيانات فوراً.")
+        st.subheader("📊 البيانات الحالية من الجدول")
+        st.dataframe(df) # هذا يعرض الجدول في تطبيقك
     except:
-        st.error("خطأ: تأكد أن رابط الجدول متاح للعامة (Public)."
+        st.warning("يرجى التأكد من وضع رابط الجدول الصحيح في الكود.")
+
+app()
